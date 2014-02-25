@@ -72,14 +72,65 @@ void MainWindow::dropEvent(QDropEvent *ev)
             {
                 if(info.suffix()==QLatin1String("txt"))
                 {
-                    system(QString(epoc32+"release/winscw/udeb/centrepconv.exe -nowait -Dtextshell -- -o c:\\"+info.baseName()+".cre c:\\"+info.baseName()+".txt""").toLocal8Bit().data());
+                    //system(QString(epoc32+"release/winscw/udeb/centrepconv.exe -nowait -Dtextshell -- -o c:\\"+info.baseName()+".cre c:\\"+info.baseName()+".txt""").toLocal8Bit().data());
+
+
+                    STARTUPINFO si;
+                    PROCESS_INFORMATION pi;
+
+                    ZeroMemory( &si, sizeof(si) );
+                    si.cb = sizeof(si);
+                    ZeroMemory( &pi, sizeof(pi) );
+
+                    std::wstring wstr = QString(epoc32+"release/winscw/udeb/centrepconv.exe -nowait -Dtextshell -- -o c:\\"+info.baseName()+".cre c:\\"+info.baseName()+".txt""").toStdWString();
+                    if(CreateProcess(NULL,
+                                     wstr.c_str(),
+                                     NULL,NULL,FALSE,
+                                     NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW,
+                                     NULL,NULL,
+                                     &si,
+                                     &pi
+                                     ))
+                    {
+                        WaitForSingleObject( pi.hProcess, INFINITE );
+                        CloseHandle( pi.hProcess );
+                        CloseHandle( pi.hThread );
+
+                    }
+
                     QFile::copy(epoc32+"winscw/c/"+info.baseName()+".cre",url.toString().mid(8).replace(QString(".txt"),QString(".cre")));
                     QFile (epoc32+"winscw/c/"+info.baseName()+".cre").remove();
                 }
 
                 if(info.suffix()==QLatin1String("cre"))
                 {
-                    system(QString(epoc32+"release/winscw/udeb/centrepconv.exe -nowait -Dtextshell -- -o c:\\"+info.baseName()+".txt c:\\"+info.baseName()+".cre""").toLocal8Bit().data());
+                    //system(QString(epoc32+"release/winscw/udeb/centrepconv.exe -nowait -Dtextshell -- -o c:\\"+info.baseName()+".txt c:\\"+info.baseName()+".cre""").toLocal8Bit().data());
+
+
+                    STARTUPINFO si;
+                    PROCESS_INFORMATION pi;
+
+                    ZeroMemory( &si, sizeof(si) );
+                    si.cb = sizeof(si);
+                    ZeroMemory( &pi, sizeof(pi) );
+
+                    std::wstring wstr = QString(epoc32+"release/winscw/udeb/centrepconv.exe -nowait -Dtextshell -- -o c:\\"+info.baseName()+".txt c:\\"+info.baseName()+".cre""").toStdWString();
+                    if(CreateProcess(NULL,
+                                     wstr.c_str(),
+                                     NULL,NULL,FALSE,
+                                     NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW,
+                                     NULL,NULL,
+                                     &si,
+                                     &pi
+                                     ))
+                    {
+                        WaitForSingleObject( pi.hProcess, INFINITE );
+                        CloseHandle( pi.hProcess );
+                        CloseHandle( pi.hThread );
+
+                    }
+
+
                     QFile::copy(epoc32+"winscw/c/"+info.baseName()+".txt",url.toString().mid(8).replace(QString(".cre"),QString(".txt")));
                     QFile(epoc32+"winscw/c/"+info.baseName()+".txt").remove();
                 }
