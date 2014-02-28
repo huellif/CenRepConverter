@@ -24,6 +24,7 @@ private:
     QString epoc32;
     void loadSettings();
     void saveSettings(const QString &path);
+    void convert(QList<QUrl> &urls);
 
 protected:
     void dropEvent(QDropEvent *ev);
@@ -32,6 +33,9 @@ private slots:
 
     void on_Load_clicked();
     void on_Save_clicked();
+    void on_actionExit_triggered();
+    void on_actionA_file_triggered();
+    void on_actionA_folder_triggered();
 };
 
 #endif // MAINWINDOW_H

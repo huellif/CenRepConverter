@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-02-21T17:56:08
-#
-#-------------------------------------------------
-
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -17,10 +11,15 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h
 
+
 FORMS    += mainwindow.ui
 
-QMAKE_CXXFLAGS += -std=c++11 -fpermissive
+QMAKE_CXXFLAGS += -std=c++11 -unicode -fpermissive
 
 win32 {
 RC_FILE = CenRepConverter.rc
 }
+
+OTHER_FILES += \
+    CenRepConverter.rc \
+    info.h
