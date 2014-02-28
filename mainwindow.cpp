@@ -234,18 +234,8 @@ void MainWindow::on_actionA_file_triggered()
     if(urls.isEmpty()) return;
     foreach(QUrl url, urls)
     {
-        if(QDir(url.toString().mid(8)).exists())
-        {
-            urls.removeOne(url);
-            QDir dir(url.toString().mid(8));
-            convertFolder(dir);
-        }
-        else
-        {
-            QFileInfo info(url.toString());
-            if(info.baseName().length()!=8 && (info.suffix()=="txt" || info.suffix()=="cre")) urls.removeOne(url);
-        }
-
+        QFileInfo info(url.toString());
+        if(info.baseName().length()!=8) urls.removeOne(url);
     }
     convert(urls);
 }
