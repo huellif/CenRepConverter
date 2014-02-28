@@ -65,6 +65,7 @@ void MainWindow::convert(QList<QUrl> &urls)
     if (urls.empty())
     {
         ui->output->showMessage("No valid cenrep file!", 1800);
+        return;
     }
 
     foreach(QUrl url, urls)
@@ -168,14 +169,35 @@ void MainWindow::convert(QList<QUrl> &urls)
     }
 }
 
+void MainWindow::convertFolder(QDir &dir)
+{
+    QFileInfoList list = dir.entryInfoList();
+    QList<QUrl> urls;
+    foreach (QFileInfo a, list)
+    {
+        urls << a.absoluteFilePath().prepend("file:///");
+    }
+    convert(urls);
+}
+
 void MainWindow::dropEvent(QDropEvent *ev)
 {
     QList<QUrl> urls = ev->mimeData()->urls();
 
     foreach(QUrl url, urls)
     {
-        QFileInfo info(url.toString());
-        if(info.baseName().length()!=8 && (info.suffix()=="txt" || info.suffix()=="cre")) urls.removeOne(url);
+        if(QDir(url.toString().mid(8)).exists())
+        {
+            urls.removeOne(url);
+            QDir dir(url.toString().mid(8));
+            convertFolder(dir);
+        }
+        else
+        {
+            QFileInfo info(url.toString());
+            if(info.baseName().length()!=8 && (info.suffix()=="txt" || info.suffix()=="cre")) urls.removeOne(url);
+        }
+
     }
     convert(urls);
 }
@@ -209,6 +231,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionA_file_triggered()
 {
     QList<QUrl> urls = QFileDialog::getOpenFileUrls(0, "Choose a .txt or .cre file", QUrl(), "CenRep files (*.cre *.txt)");
+    if(urls.isEmpty()) return;
     foreach(QUrl url, urls)
     {
         QFileInfo info(url.toString());
@@ -221,13 +244,6 @@ void MainWindow::on_actionA_folder_triggered()
 {
     QString url = QFileDialog::getExistingDirectory(0, "Choose a folder which contains cenrep files");
     if(url.isEmpty()) return;
-
-    QDir dir(url);
-    QFileInfoList list = dir.entryInfoList();
-    QList<QUrl> urls;
-    foreach (QFileInfo a, list)
-    {
-        urls << a.absoluteFilePath().prepend("file:///");
-    }
-    convert(urls);
+    QDir folder(url);
+    convertFolder(folder);
 }

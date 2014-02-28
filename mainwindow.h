@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QDebug>
 #include <QString>
+#include <QDir>
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +26,7 @@ private:
     void loadSettings();
     void saveSettings(const QString &path);
     void convert(QList<QUrl> &urls);
+    void convertFolder(QDir &dir);
 
 protected:
     void dropEvent(QDropEvent *ev);
