@@ -236,7 +236,7 @@ void MainWindow::on_Save_clicked()
     saveSettings(ui->lineEdit->text());
 }
 
-void MainWindow::on_actionExit_triggered()
+void MainWindow::on_actionExit_triggered() const
 {
     exit(0);
 }
@@ -264,12 +264,12 @@ void MainWindow::on_actionA_folder_triggered()
     convertFolder(folder);
 }
 
-void MainWindow::on_actionDonate_triggered()
+void MainWindow::on_actionDonate_triggered() const
 {
     QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HJ62F4CEATR2N"));
 }
 
-void MainWindow::on_actionAbout_triggered()
+void MainWindow::on_actionAbout_triggered() const
 {
     QMessageBox::about(0, "About CenRepConverter", "CenRepConverter 1.2 by Fabian Hüllmantel\n\nThanks to:\n- Mesut\n- Motaz\n- Juampy\n\nBased on Qt 5");
 }

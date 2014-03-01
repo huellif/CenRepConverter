@@ -31,15 +31,16 @@ private:
 protected:
     void dropEvent(QDropEvent *ev);
     void dragEnterEvent(QDragEnterEvent *ev);
+
 private slots:
 
     void on_Load_clicked();
     void on_Save_clicked();
-    void on_actionExit_triggered();
+    void on_actionExit_triggered() const;
     void on_actionA_file_triggered();
     void on_actionA_folder_triggered();
-    void on_actionDonate_triggered();
-    void on_actionAbout_triggered();
+    void on_actionDonate_triggered() const;
+    void on_actionAbout_triggered() const;
 };
 
 #endif // MAINWINDOW_H
