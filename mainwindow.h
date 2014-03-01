@@ -38,6 +38,8 @@ private slots:
     void on_actionExit_triggered();
     void on_actionA_file_triggered();
     void on_actionA_folder_triggered();
+    void on_actionDonate_triggered();
+    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H

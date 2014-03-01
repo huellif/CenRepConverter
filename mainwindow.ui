@@ -120,7 +120,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>969</width>
+     <width>550</width>
      <height>21</height>
     </rect>
    </property>
@@ -138,7 +138,15 @@
     <addaction name="menuConvert"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuOther">
+    <property name="title">
+     <string>Other</string>
+    </property>
+    <addaction name="actionDonate"/>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuOther"/>
   </widget>
   <widget class="QStatusBar" name="output"/>
   <action name="actionExit">
@@ -154,6 +162,16 @@
   <action name="actionA_folder">
    <property name="text">
     <string>Folder</string>
+   </property>
+  </action>
+  <action name="actionDonate">
+   <property name="text">
+    <string>Donate</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
