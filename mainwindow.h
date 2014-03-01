@@ -25,7 +25,7 @@ private:
     QString epoc32;
     void loadSettings();
     void saveSettings(const QString &path);
-    void convert(QList<QUrl> &urls);
+    void convert(const QList<QUrl> &urls);
     void convertFolder(QDir &dir);
 
 protected:

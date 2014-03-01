@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QDebug>
 #include <QFileDialog>
+#include <QtConcurrent/QtConcurrent>
 
 #if QT_VERSION >= 0x050000
 #include <QWidget>
@@ -64,7 +65,7 @@ void MainWindow::saveSettings(const QString &path)
     }
 }
 
-void MainWindow::convert(QList<QUrl> &urls)
+void MainWindow::convert(const QList<QUrl> &urls)
 {
     foreach(QUrl url, urls)
     {
@@ -190,7 +191,7 @@ void MainWindow::convertFolder(QDir &dir)
     }
     else
     {
-        convert(urls);
+       QtConcurrent::run(this, &MainWindow::convert, urls);
     }
 }
 
@@ -211,7 +212,7 @@ void MainWindow::dropEvent(QDropEvent *ev)
             urls2 << url;
         }
     }
-    convert(urls2);
+    QtConcurrent::run(this, &MainWindow::convert, urls2);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *ev)
@@ -251,7 +252,8 @@ void MainWindow::on_actionA_file_triggered()
         if(info.baseName().length()!=8) urls2 << url ;
     }
     if(urls2.isEmpty()) return;
-    convert(urls2);
+    QtConcurrent::run(this, &MainWindow::convert, urls2);
+    //convert(urls2);
 }
 
 void MainWindow::on_actionA_folder_triggered()
